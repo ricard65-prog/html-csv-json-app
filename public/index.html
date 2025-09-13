@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSV et JSON App</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Gestion des fichiers CSV et JSON</h1>
+<!-- Ajoute ce bloc dans <body> -->
+<section>
+    <h2>Ajouter une ligne au JSON</h2>
+    <form id="addJsonForm">
+        <input type="text" id="jsonNom" placeholder="Nom" required>
+        <input type="number" id="jsonAge" placeholder="Âge" required>
+        <button type="submit">Ajouter au JSON</button>
+    </form>
+</section>
+
+   <section>
+    <h2>Afficher la liste JSON</h2>
+    <button id="showJsonBtn">Afficher la liste</button>
+    <ul id="jsonList"></ul>
+</section>
+    <script src="script.js"></script>
+</body>
+</html>
