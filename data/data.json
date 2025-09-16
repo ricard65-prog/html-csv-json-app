@@ -15,7 +15,7 @@
     "email": "player@rugbyauth.com",
     "password": "123",
     "role": "player",
-    "status": "no"
+    "status": "inactive"
   },
   {
     "email": "cds@d.d",

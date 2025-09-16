@@ -98,6 +98,12 @@
         </div>
     </section>
 
+    <section>
+    <h2>Afficher la liste JSON</h2>
+    <button id="showJsonBtn">Afficher la liste</button>
+    <ul id="jsonList"></ul>
+</section>
+
     <script>
         // Load JSON Parser
         const script = document.createElement('script');
@@ -263,7 +269,27 @@
                 this.classList.remove('border-error');
             }
         });
-
+        
+        document.getElementById('showJsonBtn').addEventListener('click', async () => {
+    const list = document.getElementById('jsonList');
+    list.innerHTML = 'Chargement...';
+    try {
+        const res = await fetch('/api/json');
+        const data = await res.json();
+        list.innerHTML = '';
+        if (Array.isArray(data)) {
+            data.forEach(item => {
+                const li = document.createElement('li');
+                li.textContent = `Mail: ${item.email}, Role : ${item.role}, Statut : ${item.status}`;
+                list.appendChild(li);
+            });
+        } else {
+            list.innerHTML = 'Aucune donnée à afficher.';
+        }
+    } catch {
+        list.innerHTML = 'Erreur lors de la lecture du JSON.';
+    }
+});
     </script>
 </body>
 
