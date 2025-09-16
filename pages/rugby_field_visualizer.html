@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Visualiseur de Terrain Rugby - RugbyAuth Portal</title>
+    <link rel="stylesheet" href="main.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<script type="module" src="https://static.rocket.new/rocket-web.js?_cfg=https%3A%2F%2Frugbyauth2819back.builtwithrocket.new&_be=https%3A%2F%2Fapplication.rocket.new&_v=0.1.8"></script>
+</head>
+<body class="min-h-screen bg-background">
+    <!-- Navigation Header -->
+    <nav class="bg-surface shadow-subtle border-b border-border-light">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <svg class="h-10 w-10 text-primary" viewBox="0 0 40 40" fill="currentColor">
+                            <circle cx="20" cy="20" r="18" fill="none" stroke="currentColor" stroke-width="2"/>
+                            <ellipse cx="20" cy="20" rx="12" ry="8" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                            <path d="M8 20 L32 20 M20 8 L20 32" stroke="currentColor" stroke-width="1"/>
+                            <circle cx="20" cy="20" r="3" fill="currentColor"/>
+                        </svg>
+                    </div>
+                    <div class="ml-3">
+                        <h1 class="text-xl font-bold text-primary font-accent">Vidéos CAL</h1>
+                        <p class="text-xs text-text-secondary">Espace réservé aux joueurs du CAL</p>
+                    </div>
+                </div>
+                
+                <!-- Navigation Links -->
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="rugby_field_visualizer.html" class="text-primary font-semibold px-3 py-2 rounded-md text-sm">Vidéos</a>
+                        <a href="authentication_portal.html" class="text-text-secondary hover:text-primary transition-smooth px-3 py-2 rounded-md text-sm">Déconnexion</a>
+                    </div>
+                </div>
+                
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button type="button" id="mobileMenuBtn" class="text-text-secondary hover:text-primary focus:outline-none focus:text-primary transition-smooth">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Navigation Menu -->
+        <div id="mobileMenu" class="hidden md:hidden bg-surface border-t border-border-light">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="rugby_field_visualizer.html" class="text-primary font-semibold block px-3 py-2 rounded-md text-base">Vidéos</a>
+                <a href="authentication_portal.html" class="text-text-secondary hover:text-primary block px-3 py-2 rounded-md text-base font-medium transition-smooth">Déconnexion</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="min-h-screen bg-background py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Header -->
+            <div class="text-center mb-8">
+                <h1 class="text-3xl font-bold text-primary font-accent mb-4">Terrain de Rugby</h1>
+                <p class="text-lg text-text-secondary">Visualisation des vidéos par zone</p>
+                <div class="mt-4 px-4 py-2 bg-green-50 border border-green-200 rounded-lg inline-flex items-center">
+                    <svg class="w-5 h-5 text-green-600 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                    </svg>
+                    <span class="text-sm text-green-700 font-medium">Vidéos protégées - Visionnage uniquement</span>
+                </div>
+            </div>
+
+            <!-- Rugby Field Container -->
+            <div class="relative bg-surface rounded-xl shadow-rugby border border-border-light p-8 mb-8">
+                <!-- Field Wrapper with responsive sizing -->
+                <div class="rugby-field-container mx-auto" style="max-width: 900px;">
+                    
+                    <!-- En-but Zone Left -->
+                    <div class="zone-section embut-left" data-zone="embut" data-folder="embut-zone">
+                        <div class="zone-header">
+                            <h3 class="zone-title">EN-BUT</h3>
+                            <div class="zone-folder">📁 embut-zone/</div>
+                        </div>
+                        <div class="zone-videos" id="videos-embut-left"></div>
+                    </div>
+
+                    <!-- 22m Zone Left -->
+                    <div class="zone-section zone-22m-left" data-zone="22m" data-folder="zone-22m">
+                        <div class="zone-header">
+                            <h3 class="zone-title">22M</h3>
+                            <div class="zone-folder">📁 zone-22m/</div>
+                        </div>
+                        <div class="zone-videos" id="videos-22m-left"></div>
+                    </div>
+
+                    <!-- 40m Zone Left -->
+                    <div class="zone-section zone-40m-left" data-zone="40m" data-folder="zone-40m">
+                        <div class="zone-header">
+                            <h3 class="zone-title">40M</h3>
+                            <div class="zone-folder">📁 zone-40m/</div>
+                        </div>
+                        <div class="zone-videos" id="videos-40m-left"></div>
+                    </div>
+
+                    <!-- Center 50m Zone -->
+                    <div class="zone-section zone-50m" data-zone="50m" data-folder="zone-50m-centre">
+                        <div class="zone-header">
+                            <h3 class="zone-title">50M</h3>
+                            <div class="zone-folder">📁 zone-50m-centre/</div>
+                        </div>
+                        <div class="zone-videos" id="videos-50m"></div>
+                    </div>
+
+                    <!-- 40m Zone Right -->
+                    <div class="zone-section zone-40m-right" data-zone="40m" data-folder="zone-40m">
+                        <div class="zone-header">
+                            <h3 class="zone-title">40M</h3>
+                            <div class="zone-folder">📁 zone-40m/</div>
+                        </div>
+                        <div class="zone-videos" id="videos-40m-right"></div>
+                    </div>
+
+                    <!-- 22m Zone Right -->
+                    <div class="zone-section zone-22m-right" data-zone="22m" data-folder="zone-22m">
+                        <div class="zone-header">
+                            <h3 class="zone-title">22M</h3>
+                            <div class="zone-folder">📁 zone-22m/</div>
+                        </div>
+                        <div class="zone-videos" id="videos-22m-right"></div>
+                    </div>
+
+                    <!-- En-but Zone Right -->
+                    <div class="zone-section embut-right" data-zone="embut" data-folder="embut-zone">
+                        <div class="zone-header">
+                            <h3 class="zone-title">EN-BUT</h3>
+                            <div class="zone-folder">📁 embut-zone/</div>
+                        </div>
+                        <div class="zone-videos" id="videos-embut-right"></div>
+                    </div>
+
+                    <!-- Field Lines and Markings -->
+                    <div class="field-markings">
+                        <!-- Sidelines -->
+                        <div class="sideline sideline-top"></div>
+                        <div class="sideline sideline-bottom"></div>
+                        
+                        <!-- Goal lines -->
+                        <div class="goal-line goal-line-left"></div>
+                        <div class="goal-line goal-line-right"></div>
+                        
+                        <!-- Try lines -->
+                        <div class="try-line try-line-left"></div>
+                        <div class="try-line try-line-right"></div>
+                        
+                        <!-- Center line -->
+                        <div class="center-line"></div>
+                        
+                        <!-- Zone lines -->
+                        <div class="zone-line zone-line-22m-left"></div>
+                        <div class="zone-line zone-line-22m-right"></div>
+                        <div class="zone-line zone-line-40m-left"></div>
+                        <div class="zone-line zone-line-40m-right"></div>
+                        
+                        <!-- Center circle -->
+                        <div class="center-circle"></div>
+                    </div>
+                </div>
+            </div>
+
+ 
+    <!-- Secure Video Modal -->
+    <div id="videoModal" class="fixed inset-0 bg-black bg-opacity-90 hidden z-50 flex items-center justify-center">
+        <div class="relative w-full h-full max-w-6xl max-h-screen p-4">
+            <!-- Close Button -->
+            <button id="closeModal" class="absolute top-4 right-4 text-white hover:text-gray-300 z-20 bg-black bg-opacity-50 rounded-full p-2">
+                <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+            </button>
+            
+            <!-- Security Warning -->
+            <div class="absolute top-4 left-4 bg-red-600 text-white px-3 py-2 rounded-lg text-sm z-20">
+                🔒 Vidéo protégée - Visionnage uniquement
+            </div>
+            
+            <!-- Video Container with Download Protection -->
+            <div class="video-protection-layer">
+                <video id="modalVideo" class="w-full h-full object-contain" controlslist="nodownload noremoteplayback noplaybackrate" disablepictureinpicture oncontextmenu="return false;" preload="metadata">
+                    <source id="videoSource" src type="video/mp4" />
+                    Votre navigateur ne supporte pas la lecture vidéo.
+                </video>
+                
+                <!-- Invisible overlay to prevent right-click -->
+                <div class="video-overlay" oncontextmenu="return false;" ondragstart="return false;"></div>
+            </div>
+            
+            <!-- Video Info -->
+            <div id="videoInfo" class="absolute bottom-4 left-4 bg-black bg-opacity-75 text-white px-4 py-2 rounded-lg">
+                <p class="text-sm" id="videoTitle">Titre de la vidéo</p>
+                <p class="text-xs text-gray-300" id="videoFolder">📁 Dossier: </p>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .rugby-field-container {
+            position: relative;
+            width: 100%;
+            height: 600px;
+            background: linear-gradient(135deg, #2E7D32 0%, #388E3C 100%);
+            border-radius: 12px;
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+            gap: 2px;
+        }
+
+        .zone-section {
+            position: relative;
+            background: rgba(46, 125, 50, 0.7);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            display: flex;
+            flex-direction: column;
+            padding: 8px;
+            min-height: 100%;
+        }
+
+        .zone-section:hover {
+            background: rgba(46, 125, 50, 0.9);
+            border-color: rgba(255, 255, 255, 0.6);
+        }
+
+        .zone-header {
+            text-align: center;
+            margin-bottom: 12px;
+        }
+
+        .zone-title {
+            color: white;
+            font-size: 12px;
+            font-weight: 600;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+            margin: 0 0 4px 0;
+        }
+
+        .zone-folder {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 8px;
+            font-family: monospace;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 2px 4px;
+            border-radius: 3px;
+            display: inline-block;
+        }
+
+        .zone-videos {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+            gap: 8px;
+            overflow-y: auto;
+            max-height: calc(100% - 50px);
+        }
+
+        .video-thumbnail {
+            position: relative;
+            aspect-ratio: 16/9;
+            border-radius: 6px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            user-select: none;
+            -webkit-user-drag: none;
+        }
+
+        .video-thumbnail:hover {
+            transform: scale(1.05);
+            border-color: rgba(255, 255, 255, 0.8);
+        }
+
+        .video-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            pointer-events: none;
+            user-select: none;
+            -webkit-user-drag: none;
+        }
+
+        .video-thumbnail .play-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 24px;
+            height: 24px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #1B5E20;
+            pointer-events: none;
+        }
+
+        .video-thumbnail .video-title {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+            color: white;
+            font-size: 10px;
+            padding: 8px 4px 4px;
+            text-align: center;
+            pointer-events: none;
+        }
+
+        .video-thumbnail .security-badge {
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            background: rgba(220, 38, 38, 0.9);
+            color: white;
+            font-size: 8px;
+            padding: 1px 3px;
+            border-radius: 3px;
+            pointer-events: none;
+        }
+
+        /* Field markings - decorative lines */
+        .field-markings {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .sideline {
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: white;
+        }
+
+        .sideline-top { top: 0; }
+        .sideline-bottom { bottom: 0; }
+
+        .goal-line, .try-line, .zone-line, .center-line {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: white;
+        }
+
+        .goal-line-left { left: 0; }
+        .goal-line-right { right: 0; }
+
+        .try-line-left { left: calc(14.28% - 1px); }
+        .try-line-right { right: calc(14.28% - 1px); }
+
+        .zone-line-22m-left { left: calc(28.56% - 1px); }
+        .zone-line-22m-right { right: calc(28.56% - 1px); }
+
+        .zone-line-40m-left { left: calc(42.84% - 1px); }
+        .zone-line-40m-right { right: calc(42.84% - 1px); }
+
+        .center-line { 
+            left: calc(50% - 1px);
+            width: 3px;
+        }
+
+        .center-circle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 80px;
+            height: 80px;
+            border: 2px solid white;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        /* Zone specific colors */
+        .embut-left, .embut-right {
+            background: rgba(244, 67, 54, 0.3);
+        }
+
+        .zone-22m-left, .zone-22m-right {
+            background: rgba(255, 152, 0, 0.3);
+        }
+
+        .zone-40m-left, .zone-40m-right {
+            background: rgba(33, 150, 243, 0.3);
+        }
+
+        .zone-50m {
+            background: rgba(76, 175, 80, 0.3);
+        }
+
+        /* Video Protection Styles */
+        .video-protection-layer {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 10;
+            background: transparent;
+            pointer-events: auto;
+        }
+
+        #modalVideo {
+            pointer-events: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        #modalVideo::-webkit-media-controls-download-button {
+            display: none;
+        }
+
+        #modalVideo::-webkit-media-controls-fullscreen-button {
+            display: none;
+        }
+
+        /* Disable text selection and drag for security */
+        .video-thumbnail, .video-thumbnail * {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-user-drag: none;
+            -khtml-user-drag: none;
+            -moz-user-drag: none;
+            -o-user-drag: none;
+            user-drag: none;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .rugby-field-container {
+                height: 400px;
+                grid-template-columns: repeat(7, 1fr);
+            }
+            
+            .zone-title {
+                font-size: 10px;
+            }
+            
+            .zone-folder {
+                font-size: 6px;
+            }
+            
+            .video-thumbnail .play-icon {
+                width: 16px;
+                height: 16px;
+            }
+            
+            .video-thumbnail .video-title {
+                font-size: 8px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .rugby-field-container {
+                height: 300px;
+            }
+            
+            .zone-videos {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Loading animation */
+        .loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 12px;
+            flex-direction: column;
+        }
+
+        .loading::after {
+            content: '...';
+            animation: loading 1.5s infinite;
+        }
+
+        @keyframes loading {
+            0%, 33% { content: '.'; }
+            34%, 66% { content: '..'; }
+            67%, 100% { content: '...'; }
+        }
+
+        .loading-folder {
+            font-size: 8px;
+            color: rgba(255, 255, 255, 0.6);
+            margin-top: 4px;
+        }
+
+        /* Error state */
+        .error {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 10px;
+            text-align: center;
+            padding: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .error-folder {
+            font-size: 8px;
+            color: rgba(255, 255, 255, 0.4);
+            margin-top: 4px;
+        }
+    </style>
+
+    <script>
+		const script = document.createElement('script');
+        script.src = '../js/Node.js';
+        script.onload = initializeAuth;
+        document.head.appendChild(script);
+		
+        // Enhanced Video Security Manager
+        class SecureVideoManager {
+            constructor() {
+                this.securityEnabled = true;
+                this.folderStructure = {
+                    'embut': 'embut-zone',
+                    '22m': 'zone-22m',
+                    '40m': 'zone-40m',
+                    '50m': 'zone-50m-centre'
+                };
+                this.videoCounts = {};
+                this.init();
+            }
+
+            init() {
+                this.disableRightClick();
+                this.disableKeyboardShortcuts();
+                this.disableDeveloperTools();
+            }
+
+            // Enhanced video data with folder organization
+			getVideoData(){
+				const res = await fetch("../videos/");
+			  const data = await res.json();
+			  console.log(data); // ton tableau automatique
+			}
+            getVideoData2() {
+                return {
+                    embut: [
+                        { 
+                            title: 'Essai Décisif', 
+                            thumbnail: 'https://images.unsplash.com/photo-1551698618-1dfe5d97d256?q=80&w=300&h=200&auto=format&fit=crop', 
+                            video: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+                            folder: 'embut-zone',
+                            filename: 'essai_decisif_001.mp4'
+                        },
+                        { 
+                            title: 'Défense En-but', 
+                            thumbnail: 'https://images.unsplash.com/photo-1584824486509-112e4181ff6b?q=80&w=300&h=200&auto=format&fit=crop', 
+                            video: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
+                            folder: 'embut-zone',
+                            filename: 'defense_embut_002.mp4'
+                        }
+                    ],
+                    '22m': [
+                        { 
+                            title: 'Pénalité 22m', 
+                            thumbnail: 'https://images.pixabay.com/photo/2016/11/29/06/15/rugby-1867897_1280.jpg?w=300&h=200', 
+                            video: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
+                            folder: 'zone-22m',
+                            filename: 'penalite_22m_001.mp4'
+                        },
+                        { 
+                            title: 'Sortie de Camp', 
+                            thumbnail: 'https://images.unsplash.com/photo-1578662996442-48f60103fc96?q=80&w=300&h=200&auto=format&fit=crop', 
+                            video: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4',
+                            folder: 'zone-22m',
+                            filename: 'sortie_camp_002.mp4'
+                        }
+                    ],
+                    '40m': [
+                        { 
+                            title: 'Jeu au Pied', 
+                            thumbnail: 'https://images.unsplash.com/photo-1579952363873-27d3bfad9c0d?q=80&w=300&h=200&auto=format&fit=crop', 
+                            video: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4',
+                            folder: 'zone-40m',
+                            filename: 'jeu_pied_001.mp4'
+                        },
+                        { 
+                            title: 'Passe Longue', 
+                            thumbnail: 'https://images.unsplash.com/photo-1606591248300-95fab8bc6d0c?q=80&w=300&h=200&auto=format&fit=crop', 
+                            video: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
+                            folder: 'zone-40m',
+                            filename: 'passe_longue_002.mp4'
+                        }
+                    ],
+                    '50m': [
+                        { 
+                            title: 'Mêlée Fermée', 
+                            thumbnail: 'https://images.unsplash.com/photo-1614096252654-f8c9c47a2e98?q=80&w=300&h=200&auto=format&fit=crop', 
+                            video: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4',
+                            folder: 'zone-50m-centre',
+                            filename: 'melee_fermee_001.mp4'
+                        },
+                        { 
+                            title: 'Coup d\'Envoi', 
+                            thumbnail: 'https://images.unsplash.com/photo-1551376347-075b0121a65b?q=80&w=300&h=200&auto=format&fit=crop', 
+                            video: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackOnStreetAndDirt.mp4',
+                            folder: 'zone-50m-centre',
+                            filename: 'coup_envoi_002.mp4'
+                        },
+                        { 
+                            title: 'Ligne d\'Avantage', 
+                            thumbnail: 'https://images.unsplash.com/photo-1606591248300-95fab8bc6d0c?q=80&w=300&h=200&auto=format&fit=crop', 
+                            video: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4',
+                            folder: 'zone-50m-centre',
+                            filename: 'ligne_avantage_003.mp4'
+                        }
+                    ]
+                };
+            }
+
+            // Security: Disable right-click context menu
+            disableRightClick() {
+                document.addEventListener('contextmenu', (e) => {
+                    e.preventDefault();
+                    this.showSecurityAlert('Clic droit désactivé pour protéger le contenu.');
+                    return false;
+                });
+            }
+
+            // Security: Disable keyboard shortcuts for downloading/inspecting
+            disableKeyboardShortcuts() {
+                document.addEventListener('keydown', (e) => {
+                    // Disable F12, Ctrl+Shift+I, Ctrl+S, Ctrl+U, etc.
+                    if (
+                        e.key === 'F12' || 
+                        (e.ctrlKey && e.shiftKey && e.key === 'I') ||
+                        (e.ctrlKey && e.key === 's') ||
+                        (e.ctrlKey && e.key === 'u') ||
+                        (e.ctrlKey && e.shiftKey && e.key === 'J') ||
+                        (e.ctrlKey && e.key === 'S')
+                    ) {
+                        e.preventDefault();
+                        this.showSecurityAlert('Cette action est désactivée pour protéger le contenu.');
+                        return false;
+                    }
+                });
+            }
+
+            // Security: Basic developer tools detection
+            disableDeveloperTools() {
+                let devtools = false;
+                setInterval(() => {
+                    if (window.outerHeight - window.innerHeight > 200 || window.outerWidth - window.innerWidth > 200) {
+                        if (!devtools) {
+                            devtools = true;
+                            this.showSecurityAlert('Outils de développement détectés. Le contenu est protégé.');
+                        }
+                    } else {
+                        devtools = false;
+                    }
+                }, 500);
+            }
+
+            // Show security alert
+            showSecurityAlert(message) {
+                const alert = document.createElement('div');
+                alert.className = 'fixed top-4 right-4 bg-red-600 text-white px-4 py-3 rounded-lg shadow-lg z-50 transition-opacity duration-300';
+                alert.innerHTML = `
+                    <div class="flex items-center">
+                        <svg class="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                        </svg>
+                        🔒 ${message}
+                    </div>
+                `;
+                document.body.appendChild(alert);
+                setTimeout(() => {
+                    alert.style.opacity = '0';
+                    setTimeout(() => alert.remove(), 300);
+                }, 3000);
+            }
+
+            // Load videos for a specific zone with folder information
+            loadZoneVideos(zoneName, containerId) {
+                const container = document.getElementById(containerId);
+                const videos = this.getVideoData()[zoneName] || [];
+                const folderName = this.folderStructure[zoneName];
+                
+                // Update video count
+                this.videoCounts[zoneName] = videos.length;
+                this.updateFolderCounts();
+                
+                if (videos.length === 0) {
+                    container.innerHTML = `
+                        <div class="error">
+                            Aucune vidéo disponible
+                            <div class="error-folder">📁 ${folderName}/</div>
+                        </div>`;
+                    return;
+                }
+
+                container.innerHTML = videos.map(video => `
+                    <div class="video-thumbnail" 
+                         data-video="${video.video}"
+                         data-title="${video.title}"
+                         data-folder="${video.folder}"
+                         data-filename="${video.filename}">
+                        <img src="${video.thumbnail}" 
+                             alt="${video.title}" 
+                             loading="lazy" 
+                             draggable="false"
+                             oncontextmenu="return false;"
+                             onerror="this.src='https://via.placeholder.com/300x200/2E7D32/FFFFFF?text=Vidéo+Protégée'">
+                        <div class="play-icon">
+                            <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                <path d="M6.271 5.055a.5.5 0 0 1 .52.024L11 7.055a.5.5 0 0 1 0 .89L6.791 9.921A.5.5 0 0 1 6.271 9.5V5.5a.5.5 0 0 1 .271-.445z"/>
+                            </svg>
+                        </div>
+                        <div class="security-badge">🔒</div>
+                        <div class="video-title">${video.title}</div>
+                    </div>
+                `).join('');
+            }
+
+            // Update folder counts display
+            updateFolderCounts() {
+                Object.entries(this.videoCounts).forEach(([zone, count]) => {
+                    const countElement = document.getElementById(`${zone}-file-count`);
+                    if (countElement) {
+                        countElement.textContent = `${count} vidéos`;
+                    }
+                });
+            }
+
+            // Simulate loading videos from organized folders
+            async loadVideosFromFolder(folderName) {
+                // Show loading with folder info
+                await new Promise(resolve => setTimeout(resolve, 500));
+                
+                // In a real implementation, this would fetch from your backend/API
+                // Example: const response = await fetch(`/api/videos/folder/${folderName}`);
+                
+                const zoneKey = Object.keys(this.folderStructure).find(
+                    key => this.folderStructure[key] === folderName
+                );
+                
+                return this.getVideoData()[zoneKey] || [];
+            }
+
+            // Initialize all zones with folder structure
+            async initializeField() {
+                const zones = [
+                    { name: 'embut', containers: ['videos-embut-left', 'videos-embut-right'] },
+                    { name: '22m', containers: ['videos-22m-left', 'videos-22m-right'] },
+                    { name: '40m', containers: ['videos-40m-left', 'videos-40m-right'] },
+                    { name: '50m', containers: ['videos-50m'] }
+                ];
+
+                for (const zone of zones) {
+                    const folderName = this.folderStructure[zone.name];
+                    
+                    // Show loading state with folder info
+                    zone.containers.forEach(containerId => {
+                        const container = document.getElementById(containerId);
+                        container.innerHTML = `
+                            <div class="loading">
+                                Chargement
+                                <div class="loading-folder">📁 ${folderName}/</div>
+                            </div>`;
+                    });
+
+                    try {
+                        // Load videos for this zone/folder
+                        const videos = await this.loadVideosFromFolder(folderName);
+                        
+                        // Update all containers for this zone
+                        zone.containers.forEach(containerId => {
+                            this.loadZoneVideos(zone.name, containerId);
+                        });
+                    } catch (error) {
+                        console.error(`Error loading videos for folder ${folderName}:`, error);
+                        zone.containers.forEach(containerId => {
+                            const container = document.getElementById(containerId);
+                            container.innerHTML = `
+                                <div class="error">
+                                    Erreur de chargement
+                                    <div class="error-folder">📁 ${folderName}/</div>
+                                </div>`;
+                        });
+                    }
+                }
+            }
+
+            // Open secure video modal
+            openSecureVideoModal(videoUrl, title, folder, filename) {
+                const modal = document.getElementById('videoModal');
+                const modalVideo = document.getElementById('modalVideo');
+                const videoSource = document.getElementById('videoSource');
+                const videoTitle = document.getElementById('videoTitle');
+                const videoFolder = document.getElementById('videoFolder');
+                
+                // Set video source and info
+                videoSource.src = videoUrl;
+                videoTitle.textContent = title || 'Vidéo Rugby';
+                videoFolder.textContent = `📁 ${folder}/${filename}`;
+                
+                modalVideo.load();
+                modal.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+                
+                // Auto-play with error handling
+                modalVideo.play().catch(e => {
+                    console.log('Auto-play prevented:', e);
+                    this.showSecurityAlert('Cliquez sur play pour démarrer la vidéo.');
+                });
+
+                // Apply additional security measures
+                modalVideo.addEventListener('loadstart', () => {
+                    modalVideo.controlsList = 'nodownload noremoteplayback noplaybackrate';
+                    modalVideo.disablePictureInPicture = true;
+                });
+            }
+
+            // Close secure video modal
+            closeSecureVideoModal() {
+                const modal = document.getElementById('videoModal');
+                const modalVideo = document.getElementById('modalVideo');
+                const videoSource = document.getElementById('videoSource');
+                
+                modal.classList.add('hidden');
+                modalVideo.pause();
+                modalVideo.currentTime = 0;
+                videoSource.src = '';
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        // Initialize the Secure Video Manager
+        const secureVideoManager = new SecureVideoManager();
+
+        // Mobile menu toggle
+        document.getElementById('mobileMenuBtn').addEventListener('click', function() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Event listeners for secure video thumbnails
+        document.addEventListener('click', function(e) {
+            const thumbnail = e.target.closest('.video-thumbnail');
+            if (thumbnail) {
+                const videoUrl = thumbnail.dataset.video;
+                const title = thumbnail.dataset.title;
+                const folder = thumbnail.dataset.folder;
+                const filename = thumbnail.dataset.filename;
+                
+                secureVideoManager.openSecureVideoModal(videoUrl, title, folder, filename);
+            }
+        });
+
+        // Modal close events
+        document.getElementById('closeModal').addEventListener('click', () => {
+            secureVideoManager.closeSecureVideoModal();
+        });
+
+        document.getElementById('videoModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                secureVideoManager.closeSecureVideoModal();
+            }
+        });
+
+        // Keyboard events
+        document.addEventListener('keydown', function(e) {
+            const modal = document.getElementById('videoModal');
+            if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+                secureVideoManager.closeSecureVideoModal();
+            }
+        });
+
+        // Prevent video modal interactions that could lead to download
+        document.getElementById('modalVideo').addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+
+        // Initialize the secure field on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            secureVideoManager.initializeField();
+        });
+
+        // Refresh functionality for development (secured)
+        function refreshSecureVideos() {
+            secureVideoManager.initializeField();
+            secureVideoManager.showSecurityAlert('Vidéos sécurisées rechargées!');
+        }
+
+        // Enhanced error handling for protected content
+        document.addEventListener('error', function(e) {
+            if (e.target.tagName === 'IMG' && e.target.closest('.video-thumbnail')) {
+                e.target.src = 'https://via.placeholder.com/300x200/2E7D32/FFFFFF?text=Vidéo+Protégée';
+            }
+        }, true);
+
+        // Progressive loading with security measures
+        const secureObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    if (img.dataset.src && !img.src.includes('placeholder')) {
+                        img.src = img.dataset.src;
+                        img.removeAttribute('data-src');
+                        secureObserver.unobserve(img);
+                    }
+                }
+            });
+        }, { rootMargin: '50px', threshold: 0.1 });
+
+        // Secure development helper (can be removed in production)
+        if (window.location.hostname === 'localhost' || window.location.hostname.includes('dev')) {
+            const refreshBtn = document.createElement('button');
+            refreshBtn.textContent = '🔒 Recharger Vidéos Sécurisées';
+            refreshBtn.className = 'fixed bottom-4 right-4 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg z-40 text-sm font-medium transition-colors';
+            refreshBtn.onclick = refreshSecureVideos;
+            document.body.appendChild(refreshBtn);
+        }
+
+        // Video protection: Disable picture-in-picture globally
+        document.addEventListener('enterpictureinpicture', (e) => {
+            e.preventDefault();
+            secureVideoManager.showSecurityAlert('Picture-in-Picture désactivé pour la sécurité.');
+        });
+
+        // Console warning for developers
+        console.warn(`
+🔒 SYSTÈME DE PROTECTION VIDÉO ACTIVÉ
+======================================
+• Téléchargement: DÉSACTIVÉ
+• Clic droit: DÉSACTIVÉ  
+• Raccourcis clavier: DÉSACTIVÉS
+• Picture-in-Picture: DÉSACTIVÉ
+• Organisation: Par dossiers de zones
+• Sécurité: Maximale
+
+Ce système protège le contenu vidéo contre le téléchargement non autorisé.
+        `);
+    </script>
+</body>
+</html>

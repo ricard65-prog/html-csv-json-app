@@ -1,15 +1,101 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CSV et JSON App</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Le Rugby à Jojo !</title>
+    <link rel="stylesheet" href="./css/main.css" />
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #2c5530, #4a7c59);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: white;
+        }
+
+        .redirect-container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .logo {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #ffffff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .loading-text {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-top: 4px solid #ffffff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .redirect-info {
+            font-size: 0.9em;
+            opacity: 0.7;
+            margin-top: 20px;
+        }
+    </style>
 </head>
+
 <body>
-    <h1>Gestion des fichiers CSV et JSON</h1>
-<!-- Ajoute ce bloc dans <body> -->
-<section>
+    <!-- Ajoute ce bloc dans <body> -->
+    <section>
+        <div class="redirect-container">
+            <div class="logo">🏉 Le portail du Rugby à Jojo</div>
+            <div class="loading-text">Redirection vers le portail du Rugby à Jojo...</div>
+            <div class="spinner"></div>
+            <div class="redirect-info">Veuillez patienter durant la redirection ...</div>
+        </div>
+        <script>
+            // Redirect to authentication portal after 2 seconds
+            setTimeout(function () {
+                window.location.href = '/authentication_portal.html';
+            }, 2000);
+
+            // Fallback redirect in case of any issues
+            window.addEventListener('load', function () {
+                setTimeout(function () {
+                    if (window.location.pathname.endsWith('index.html') || window.location.pathname.endsWith('/')) {
+                        window.location.href = '/authentication_portal.html';
+                    }
+                }, 3000);
+            });
+        </script>
+        <!--
     <h2>Ajouter une ligne au JSON</h2>
     <form id="addJsonForm">
         <input type="text" id="jsonNom" placeholder="Nom" required>
@@ -23,6 +109,7 @@
     <button id="showJsonBtn">Afficher la liste</button>
     <ul id="jsonList"></ul>
 </section>
-    <script src="script.js"></script>
+    <script src="script.js"></script>-->
 </body>
+
 </html>

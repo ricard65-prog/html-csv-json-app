@@ -1,7 +1,7 @@
 {
-  "name": "html-csv-json-app",
+  "name": "jojo-rugby",
   "version": "1.0.0",
-  "description": "A web application to read and write CSV and JSON files.",
+  "description": "Plateforme de vidéos du Rugby à Jojo.",
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js"
@@ -15,5 +15,14 @@
     "fs-extra": "^10.0.0"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ricard65-prog/html-csv-json-app.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/ricard65-prog/html-csv-json-app/issues"
+  },
+  "homepage": "https://github.com/ricard65-prog/html-csv-json-app#readme"
 }

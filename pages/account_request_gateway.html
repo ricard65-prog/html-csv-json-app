@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Demande d'Accès - Le Rugby à Jojo.</title>
+    <link rel="stylesheet" href="main.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="fonts.gstatic.com" crossorigin />
+</head>
+
+<body class="min-h-screen bg-background">
+    <!-- Hero Section -->
+    <section class="relative py-16 overflow-hidden">
+        <!-- Rugby Field Background -->
+        <div class="absolute inset-0 rugby-field-pattern opacity-5"></div>
+        <div class="absolute inset-0 bg-gradient-to-br from-primary-50 via-transparent to-accent-50"></div>
+
+        <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Header -->
+            <div class="text-center mb-12">
+                <div class="inline-flex items-center justify-center w-16 h-16 bg-primary rounded-full mb-6">
+                    <svg class="w-8 h-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+                    </svg>
+                </div>
+                <h1 class="text-4xl font-bold text-primary font-accent mb-4">Rejoignez l'équipe à Jojo</h1>
+                <p class="text-xl text-text-secondary max-w-2xl mx-auto">
+                    Demandez l'accès à la plateforme.
+                </p>
+            </div>
+
+
+            <!-- Multi-Step Form -->
+            <div class="card p-8 shadow-rugby-card max-w-2xl mx-auto">
+                <form id="registrationForm" class="space-y-6">
+                    <!-- Step 1: Personal Information -->
+                    <div id="step1" class="step-content">
+                        <div class="mb-6">
+                            <h3 class="text-xl font-semibold justify-center text-primary mb-2">Informations Personnelles
+                            </h3>
+                        </div>
+
+                        <!-- Email -->
+                        <div class="relative">
+                            <input type="email" id="email" name="email" class="input-field peer placeholder-transparent"
+                                placeholder="Adresse email" required />
+                            <label for="email"
+                                class="absolute left-4 -top-2.5 bg-surface px-2 text-sm text-text-secondary transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-text-secondary peer-placeholder-shown:top-3 peer-focus:-top-2.5 peer-focus:text-sm peer-focus:text-primary">
+                                Adresse Email *
+                            </label>
+                            <div class="absolute inset-y-0 right-0 pr-3 flex items-center">
+                                <svg class="h-5 w-5 text-text-secondary" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" />
+                                </svg>
+                            </div>
+                        </div>
+
+                        <!-- Password -->
+                        <div class="relative">
+                            <input type="password" id="password" name="password"
+                                class="input-field peer placeholder-transparent" placeholder="Mot de passe" required />
+                            <label for="password"
+                                class="absolute left-4 -top-2.5 bg-surface px-2 text-sm text-text-secondary transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-text-secondary peer-placeholder-shown:top-3 peer-focus:-top-2.5 peer-focus:text-sm peer-focus:text-primary">
+                                Mot de passe *
+                            </label>
+
+                        </div>
+
+                        <div class="flex justify-center">
+                            <button type="submit" id="submitRequest" class="btn-primary flex items-center space-x-2">
+                                <span>Soumettre la Demande</span>
+                                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Already Have Account -->
+            <div class="mt-8 text-center">
+                <p class="text-text-secondary mb-4">Vous avez déjà un compte ?</p>
+                <a href="authentication_portal.html" class="btn-secondary inline-flex items-center space-x-2">
+                    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M11 16l-4-4m0 0l4-4m-4 4h14" />
+                    </svg>
+                    <span>Retour à la Connexion</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Load JSON Parser
+        const script = document.createElement('script');
+        script.src = 'jsonParser.js';
+        script.onload = initializeAuth;
+        document.head.appendChild(script);
+
+        let authSystem = null;
+
+        async function initializeAuth() {
+            try {
+                // Initialize JSON parser and load user data
+                authSystem = new JSONParser();
+                await authSystem.loadUsers();
+
+                updateSummary();
+
+            } catch (error) {
+                console.error('❌ Failed to initialize authentication:', error);
+                // Still allow login with fallback data
+            }
+        }
+        document.head.appendChild(script);
+
+        // Multi-step form logic
+        let currentStep = 1;
+        const totalSteps = 3;
+
+        function updateSummary() {
+            const summaryContent = document.getElementById('summaryContent');
+            const formData = new FormData(document.getElementById('registrationForm'));
+
+            const email = formData.get('email');
+            const password = formData.get('pawsword');
+
+            summaryContent.innerHTML = `
+                <div><strong>Email :</strong> ${email}</div>
+            `;
+        }
+
+        // Form submission
+        document.getElementById('registrationForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const submitButton = document.getElementById('submitRequest');
+            const originalText = submitButton.innerHTML;
+
+            // Show loading state
+            submitButton.innerHTML = `
+                <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Soumission en cours...
+            `;
+            submitButton.disabled = true;
+            try {
+                if (authSystem && authSystem.isLoaded) {
+                    users = authSystem.addUser(email.value, password.value);
+
+                    // Réécrire le JSON
+                    const writeRes = fetch('/api/json', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(users)
+                    });
+                    const result = writeRes.json();
+                    alert(result.message || 'Ligne ajoutée au JSON');
+
+                } else {
+                    // Fallback to hardcoded credentials if CSV not loaded
+                    console.warn('⚠️  CSV not loaded, using fallback authentication');
+
+                }
+/*
+                if (response.ok) {
+                    // Utilisez result.status pour le statut
+                    button.innerHTML = 'La demande a bien été prise !';
+
+                } else {
+
+                    button.innerHTML = 'Erreur durant le traitement';
+                    button.classList.remove('btn-primary');
+                    button.classList.add('bg-error', 'hover:bg-red-600');
+
+                    setTimeout(() => {
+                        button.innerHTML = originalText; 
+                        button.disabled = false;
+                        button.classList.remove('bg-warning', 'hover:bg-orange-600');
+                        button.classList.remove('bg-error', 'hover:bg-red-600');
+                        button.classList.add('btn-primary');
+                    }, 2000);
+                }*/
+            } catch (error) {
+                button.innerHTML = 'Erreur système';
+                button.innerHTML = response.statusText;
+                setTimeout(() => {
+                    button.innerHTML = originalText;
+                    button.disabled = false;
+                }, 2000);
+            }
+            /*
+        // Simulate form submission
+        setTimeout(() => {
+            // Success state
+            submitButton.innerHTML = `
+                <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                </svg>
+                Demande Soumise !
+            `;
+
+            // Show success message
+            setTimeout(() => {
+                //alert('Votre demande d\'accès a été soumise avec succès ! Vous recevrez un email de confirmation sous peu. Notre équipe examinera votre demande dans les 24-48 heures.');
+                
+                // Redirect to login page
+                window.location.href = 'authentication_portal.html';
+            }, 1500);
+        }, 2000);*/
+        });
+
+        // Floating label animation enhancement
+        document.querySelectorAll('.input-field').forEach(input => {
+            input.addEventListener('focus', function () {
+                const label = this.parentElement.querySelector('label');
+                if (label) {
+                    label.classList.add('text-primary');
+                }
+            });
+
+            input.addEventListener('blur', function () {
+                const label = this.parentElement.querySelector('label');
+                if (label && !this.value) {
+                    label.classList.remove('text-primary');
+                }
+            });
+        });
+
+        // Real-time validation feedback
+        document.querySelectorAll('[required]').forEach(field => {
+            field.addEventListener('blur', function () {
+                if (!this.value.trim()) {
+                    this.classList.add('border-error');
+                } else {
+                    this.classList.remove('border-error');
+                }
+            });
+
+            field.addEventListener('input', function () {
+                if (this.value.trim()) {
+                    this.classList.remove('border-error');
+                }
+            });
+        });
+
+        // Email validation
+        document.getElementById('email').addEventListener('blur', function () {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (this.value && !emailRegex.test(this.value)) {
+                this.classList.add('border-error');
+            } else if (this.value) {
+                this.classList.remove('border-error');
+            }
+        });
+
+    </script>
+</body>
+
+</html>

@@ -5,7 +5,7 @@ This project is a web application that allows users to read and write data in CS
 
 ## Project Structure
 ```
-html-csv-json-app
+jojo-rugby
 ├── public
 │   ├── index.html        # Main HTML file for the user interface
 │   └── styles.css       # Styles for the HTML page
@@ -28,7 +28,7 @@ html-csv-json-app
    ```
 2. Navigate to the project directory:
    ```
-   cd html-csv-json-app
+   cd jojo-rugby
    ```
 3. Install the dependencies:
    ```

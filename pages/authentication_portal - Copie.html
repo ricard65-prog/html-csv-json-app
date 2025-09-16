@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Portail d'Authentification - Le Rugby à Jojo.</title>
+    <link rel="stylesheet" href="../css/main.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+</head>
+
+<body class="min-h-screen bg-background">
+    <!-- Hero Section with Rugby Field Background -->
+    <section class="relative min-h-screen flex items-center justify-center overflow-hidden">
+        <!-- Animated Rugby Field Background -->
+        <div class="absolute inset-0 rugby-field-pattern opacity-5"></div>
+        <div class="absolute inset-0 bg-gradient-to-br from-primary-50 via-transparent to-accent-50"></div>
+
+        <!-- Rugby Field Lines Overlay -->
+        <div class="absolute inset-0 opacity-10">
+            <svg class="w-full h-full" viewBox="0 0 800 600" fill="none">
+                <!-- Field outline -->
+                <rect x="100" y="100" width="600" height="400" stroke="#1B5E20" stroke-width="2" fill="none" />
+                <!-- Center line -->
+                <line x1="400" y1="100" x2="400" y2="500" stroke="#1B5E20" stroke-width="1" />
+                <!-- Try lines -->
+                <line x1="200" y1="100" x2="200" y2="500" stroke="#1B5E20" stroke-width="1" />
+                <line x1="600" y1="100" x2="600" y2="500" stroke="#1B5E20" stroke-width="1" />
+                <!-- Center circle -->
+                <circle cx="400" cy="300" r="50" stroke="#1B5E20" stroke-width="1" fill="none" />
+                <!-- Goal posts -->
+                <rect x="380" y="80" width="40" height="20" fill="#1B5E20" />
+                <rect x="380" y="500" width="40" height="20" fill="#1B5E20" />
+            </svg>
+        </div>
+
+        <!-- Main Content Container -->
+        <div class="relative z-10 w-full max-w-md mx-auto px-4">
+            <!-- Welcome Message -->
+            <div class="text-center mb-8">
+                <div class="mb-4">
+                    <div class="inline-flex items-center justify-center w-16 h-16 bg-primary rounded-full mb-4">
+                        <svg class="w-8 h-8 text-white animate-rugby-roll" viewBox="0 0 24 24" fill="currentColor">
+                            <ellipse cx="12" cy="12" rx="8" ry="6" fill="currentColor" />
+                            <path d="M4 12h16M12 4v16" stroke="white" stroke-width="1" />
+                        </svg>
+                    </div>
+                </div>
+                <h1 class="text-3xl font-bold text-primary font-accent mb-2">Bienvenue au CAL</h1>
+                <p class="text-text-secondary text-lg">Accédez aux vidéos par zone</p>
+            </div>
+
+            <!-- Login Form Card -->
+            <div class="card p-8 shadow-rugby-card">
+                <form id="loginForm" class="space-y-6">
+                    <!-- Email Field -->
+                    <div class="relative">
+                        <input type="email" id="email" name="email" class="input-field peer placeholder-transparent"
+                            placeholder="Adresse email" required />
+                        <label for="email"
+                            class="absolute left-4 -top-2.5 bg-surface px-2 text-sm text-text-secondary transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-text-secondary peer-placeholder-shown:top-3 peer-focus:-top-2.5 peer-focus:text-sm peer-focus:text-primary">
+                            Adresse Email
+                        </label>
+                        <div class="absolute inset-y-0 right-0 pr-3 flex items-center">
+                            <svg class="h-5 w-5 text-text-secondary" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" />
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- Password Field -->
+                    <div class="relative">
+                        <input type="password" id="password" name="password"
+                            class="input-field peer placeholder-transparent" placeholder="Mot de passe" required />
+                        <label for="password"
+                            class="absolute left-4 -top-2.5 bg-surface px-2 text-sm text-text-secondary transition-all peer-placeholder-shown:text-base peer-placeholder-shown:text-text-secondary peer-placeholder-shown:top-3 peer-focus:-top-2.5 peer-focus:text-sm peer-focus:text-primary">
+                            Mot de Passe
+                        </label>
+                        <div class="absolute inset-y-0 right-0 pr-3 flex items-center">
+                            <button type="button" id="togglePassword"
+                                class="text-text-secondary hover:text-primary transition-smooth">
+                                <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Remember Me & Forgot Password -->
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center">
+                            <input id="remember-me" name="remember-me" type="checkbox"
+                                class="h-4 w-4 text-primary focus:ring-primary border-border rounded" />
+                            <label for="remember-me" class="ml-2 block text-sm text-text-secondary">
+                                Se souvenir de moi
+                            </label>
+                        </div>
+                        <div class="text-sm">
+                            <a href="javascript:void(0)"
+                                class="font-medium text-primary hover:text-primary-700 transition-smooth">
+                                Mot de passe oublié ?
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Login Button -->
+                    <div>
+                        <button type="submit"
+                            class="btn-primary w-full flex items-center justify-center space-x-2 group"
+                            id="loginButton">
+                            <span>Accéder aux vidéos</span>
+                            <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                            </svg>
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+
+            <!-- Request Access CTA -->
+            <div class="mt-8 text-center">
+                <p class="text-text-secondary mb-4">Pas encore membre de notre communauté ?</p>
+                <a href="account_request_gateway.html" class="btn-accent inline-flex items-center space-x-2 group">
+                    <span>Demander l'Accès</span>
+                    <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                    </svg>
+                </a>
+
+            </div>
+        </div>
+
+
+        <script>
+            // Load CSV Parser
+            let authSystem = null;
+
+            // Toggle password visibility
+            document.getElementById('togglePassword').addEventListener('click', function () {
+                const passwordField = document.getElementById('password');
+                const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordField.setAttribute('type', type);
+
+                // Toggle icon
+                const icon = this.querySelector('svg');
+                if (type === 'text') {
+                    icon.innerHTML = `
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21"/>
+                `;
+                } else {
+                    icon.innerHTML = `
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                `;
+                }
+            });
+
+            // Enhanced form submission with CSV authentication
+            document.getElementById('loginForm').addEventListener('submit', async function (e) {
+                e.preventDefault();
+
+                const button = document.getElementById('loginButton');
+                const originalText = button.innerHTML;
+
+                // Show loading state
+                button.innerHTML = `
+                <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Connexion en cours...
+            `;
+                button.disabled = true;
+
+                // Get form data
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
+
+                try {
+                    const response = await fetch('/api/json/login', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ email, password })
+                    });
+                    console.log(response);
+                    if (response.ok) {
+                        const result = await response.json();
+                        // Utilisez result.status pour le statut
+                        button.innerHTML = 'Connexion réussie !';
+                        // Redirection ou affichage selon le statut
+                        setTimeout(() => {
+                            if (result.status === 'admin') {
+                                window.location.href = 'admin_dashboard.html';
+                            } else {
+                                window.location.href = 'rugby_field_visualizer.html';
+                            }
+                        }, 1000);
+                    } else {
+                        if (response.status === 500) {
+                            button.innerHTML = 'Compte pas encore validé !!';
+                            button.classList.remove('btn-primary');
+                            button.classList.add('bg-warning', 'hover:bg-orange-600');
+                        } else {
+                            button.innerHTML = 'Identifiants incorrects';
+                            button.classList.remove('btn-primary');
+                            button.classList.add('bg-error', 'hover:bg-red-600');
+                        }
+                        setTimeout(() => {
+                            button.innerHTML = originalText;
+                            button.disabled = false;
+                            button.classList.remove('bg-warning', 'hover:bg-orange-600');
+                            button.classList.remove('bg-error', 'hover:bg-red-600');
+                            button.classList.add('btn-primary');
+                        }, 2000);
+                    }
+                } catch (error) {
+                    button.innerHTML = 'Erreur système';
+                    button.innerHTML = response.statusText;
+                    setTimeout(() => {
+                        button.innerHTML = originalText;
+                        button.disabled = false;
+                    }, 2000);
+                }
+            });
+
+
+        // Enhanced auto-fill demo credentials with CSV data
+        function setupDemoCredentialClicks() {
+            document.querySelectorAll('.text-xs.text-primary-600 p, .space-y-1 p').forEach(p => {
+                p.style.cursor = 'pointer';
+                p.classList.add('hover:bg-primary-100', 'rounded', 'px-2', 'py-1', 'transition-colors');
+                
+                p.addEventListener('click', function() {
+                    const text = this.textContent;
+                    
+                    // Extract email from the text
+                    const emailMatch = text.match(/([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/);
+                    const passwordMatch = text.match(/\/\s*([^\s]+)$/);
+                    
+                    if (emailMatch && passwordMatch) {
+                        document.getElementById('email').value = emailMatch[1];
+                        document.getElementById('password').value = passwordMatch[1];
+                        
+                        // Trigger label animation
+                        const emailField = document.getElementById('email');
+                        const passwordField = document.getElementById('password');
+                        
+                        emailField.focus();
+                        passwordField.focus();
+                        emailField.blur();
+                        passwordField.blur();
+                        
+                        // Visual feedback
+                        this.classList.add('bg-success-100', 'border', 'border-success-300');
+                        setTimeout(() => {
+                            this.classList.remove('bg-success-100', 'border', 'border-success-300');
+                        }, 1000);
+                    }
+                });
+            });
+        }
+
+        // Setup demo credentials clicks when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initial setup
+            setupDemoCredentialClicks();
+            
+            // Re-setup after CSV loads (in case credentials are updated)
+            setTimeout(() => {
+                setupDemoCredentialClicks();
+            }, 2000);
+        });
+
+        // Generate session ID
+        function generateSessionId() {
+            return 'session_' + Math.random().toString(36).substr(2, 9) + '_' + Date.now();
+        }
+
+        // Enhanced floating label animation
+        document.querySelectorAll('.input-field').forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentElement.querySelector('label').classList.add('text-primary');
+            });
+            
+            input.addEventListener('blur', function() {
+                if (!this.value) {
+                    this.parentElement.querySelector('label').classList.remove('text-primary');
+                }
+            });
+            
+            // Check if field has value on page load
+            if (input.value) {
+                input.parentElement.querySelector('label').classList.add('text-primary');
+            }
+        });
+
+        // Add keyboard shortcuts for demo login
+        document.addEventListener('keydown', function(e) {
+            // Ctrl/Cmd + 1, 2, 3 for quick demo login
+            if ((e.ctrlKey || e.metaKey) && e.key >= '1' && e.key <= '3') {
+                e.preventDefault();
+                const demoIndex = parseInt(e.key) - 1;
+                const demoCredentials = authSystem?.getDemoCredentials() || [
+                    { email: 'admin@rugbyauth.com', password: 'AdminPass123' },
+                    { email: 'coach@rugbyauth.com', password: 'CoachPass123' },
+                    { email: 'player@rugbyauth.com', password: 'PlayerPass123' }
+                ];
+                
+                if (demoCredentials[demoIndex]) {
+                    document.getElementById('email').value = demoCredentials[demoIndex].email;
+                    document.getElementById('password').value = demoCredentials[demoIndex].password;
+                    
+                    // Trigger animations
+                    document.getElementById('email').focus();
+                    document.getElementById('password').focus();
+                    document.getElementById('email').blur();
+                    document.getElementById('password').blur();
+                }
+            }
+        });
+
+        // Add CSV validation display for development
+        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+            setTimeout(() => {
+                if (authSystem && authSystem.isLoaded) {
+                    const validation = authSystem.validateData();
+                    if (!validation.isValid) {
+                        console.warn('⚠️  CSV Validation Issues:', validation.issues);
+                    }
+                    console.log('📊 User Statistics:', authSystem.getStatistics());
+                }
+            }, 3000);
+        }
+        </script>
+</body>
+</html>

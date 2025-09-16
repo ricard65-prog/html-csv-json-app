@@ -1,14 +1,26 @@
 [
   {
-    "nom": "hjj",
-    "age": "5"
+    "email": "admin@rugbyauth.com",
+    "password": "123",
+    "role": "admin",
+    "status": "active"
   },
   {
-    "nom": "hjjhjhgf",
-    "age": "53"
+    "email": "coach@rugbyauth.com",
+    "password": "123",
+    "role": "player",
+    "status": "active"
   },
   {
-    "nom": "teste",
-    "age": "2"
+    "email": "player@rugbyauth.com",
+    "password": "123",
+    "role": "player",
+    "status": "no"
+  },
+  {
+    "email": "cds@d.d",
+    "password": "xx",
+    "role": "player",
+    "status": "inactive"
   }
 ]

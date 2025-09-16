@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tableau de Bord Admin - RugbyAuth Portal</title>
+    <link rel="stylesheet" href="main.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<script type="module" src="https://static.rocket.new/rocket-web.js?_cfg=https%3A%2F%2Frugbyauth2819back.builtwithrocket.new&_be=https%3A%2F%2Fapplication.rocket.new&_v=0.1.8"></script>
+</head>
+<body class="min-h-screen bg-background">
+    <!-- Navigation Header -->
+    <nav class="bg-surface shadow-subtle border-b border-border-light sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <div class="flex-shrink-0">
+                        <svg class="h-10 w-10 text-primary" viewBox="0 0 40 40" fill="currentColor">
+                            <circle cx="20" cy="20" r="18" fill="none" stroke="currentColor" stroke-width="2"/>
+                            <ellipse cx="20" cy="20" rx="12" ry="8" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                            <path d="M8 20 L32 20 M20 8 L20 32" stroke="currentColor" stroke-width="1"/>
+                            <circle cx="20" cy="20" r="3" fill="currentColor"/>
+                        </svg>
+                    </div>
+                    <div class="ml-3">
+                        <h1 class="text-xl font-bold text-primary font-accent">RugbyAuth Portal</h1>
+                        <p class="text-xs text-text-secondary">Administration</p>
+                    </div>
+                </div>
+                
+                <!-- Navigation Links -->
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="admin_dashboard.html" class="text-primary font-semibold px-3 py-2 rounded-md text-sm bg-primary-50">Tableau de Bord</a>
+                        <a href="rugby_field_visualizer.html" class="text-text-secondary hover:text-primary transition-smooth px-3 py-2 rounded-md text-sm">Terrain Rugby</a>
+                    </div>
+                </div>
+                
+                <!-- Admin Profile & Logout -->
+                <div class="flex items-center space-x-4">
+                    <div class="hidden md:flex items-center space-x-2">
+                        <div class="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
+                            <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z" clip-rule="evenodd"/>
+                            </svg>
+                        </div>
+                        <div class="text-sm">
+                            <p class="font-semibold text-primary">Admin</p>
+                            <p class="text-text-secondary text-xs">Administrateur</p>
+                        </div>
+                    </div>
+                    <button onclick="logout()" class="text-text-secondary hover:text-error transition-smooth">
+                        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+                        </svg>
+                    </button>
+                </div>
+                
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button type="button" class="text-text-secondary hover:text-primary focus:outline-none focus:text-primary transition-smooth">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Dashboard Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Dashboard Header -->
+        <div class="mb-8">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+                <div>
+                    <h1 class="text-3xl font-bold text-primary font-accent mb-2">Tableau de Bord Administrateur</h1>
+                    <p class="text-text-secondary">Gestion de la communauté RugbyAuth Portal</p>
+                </div>
+                <div class="mt-4 md:mt-0 flex items-center space-x-3">
+                    <div class="text-sm text-text-secondary">
+                        <span>Dernière connexion: 07/09/2025 17:19</span>
+                    </div>
+                    <div class="w-3 h-3 bg-success rounded-full animate-pulse"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Key Metrics Cards -->
+        <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <!-- Pending Requests -->
+            <div class="card p-6 hover:shadow-rugby-hover transition-all duration-300">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-text-secondary text-sm font-medium">Demandes en Attente</p>
+                        <p class="text-3xl font-bold text-warning mt-2">7</p>
+                        <p class="text-xs text-text-secondary mt-1">+3 aujourd'hui</p>
+                    </div>
+                    <div class="w-12 h-12 bg-warning-100 rounded-lg flex items-center justify-center">
+                        <svg class="w-6 h-6 text-warning" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Active Members -->
+            <div class="card p-6 hover:shadow-rugby-hover transition-all duration-300">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-text-secondary text-sm font-medium">Membres Actifs</p>
+                        <p class="text-3xl font-bold text-success mt-2">2,847</p>
+                        <p class="text-xs text-text-secondary mt-1">+12 cette semaine</p>
+                    </div>
+                    <div class="w-12 h-12 bg-success-100 rounded-lg flex items-center justify-center">
+                        <svg class="w-6 h-6 text-success" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Approvals -->
+            <div class="card p-6 hover:shadow-rugby-hover transition-all duration-300">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-text-secondary text-sm font-medium">Approbations Récentes</p>
+                        <p class="text-3xl font-bold text-primary mt-2">23</p>
+                        <p class="text-xs text-text-secondary mt-1">Cette semaine</p>
+                    </div>
+                    <div class="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center">
+                        <svg class="w-6 h-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Community Engagement -->
+            <div class="card p-6 hover:shadow-rugby-hover transition-all duration-300">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-text-secondary text-sm font-medium">Engagement</p>
+                        <p class="text-3xl font-bold text-accent mt-2">94%</p>
+                        <p class="text-xs text-text-secondary mt-1">Taux d'activité</p>
+                    </div>
+                    <div class="w-12 h-12 bg-accent-100 rounded-lg flex items-center justify-center">
+                        <svg class="w-6 h-6 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Content Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Pending Applications -->
+            <div class="lg:col-span-2">
+                <div class="card">
+                    <div class="p-6 border-b border-border-light">
+                        <div class="flex items-center justify-between">
+                            <h2 class="text-xl font-semibold text-primary">Demandes d'Accès en Attente</h2>
+                            <div class="flex items-center space-x-2">
+                                <!-- Filter Dropdown -->
+                                <select class="text-sm border border-border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500">
+                                    <option>Toutes les demandes</option>
+                                    <option>Joueurs expérimentés</option>
+                                    <option>Entraîneurs</option>
+                                    <option>Nouveaux membres</option>
+                                </select>
+                                <button class="text-text-secondary hover:text-primary transition-smooth">
+                                    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.707A1 1 0 013 7V4z"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="p-6 space-y-4 max-h-96 overflow-y-auto">
+                        <!-- Application Card 1 -->
+                        <div class="border border-border-light rounded-lg p-4 hover:shadow-rugby transition-all duration-300">
+                            <div class="flex items-start justify-between">
+                                <div class="flex items-start space-x-4">
+                                    <img src="https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop" alt="Pierre Dubois" class="w-12 h-12 rounded-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1584824486509-112e4181ff6b?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'; this.onerror=null;" />
+                                    <div class="flex-1">
+                                        <h3 class="font-semibold text-primary">Pierre Dubois</h3>
+                                        <p class="text-sm text-text-secondary">pierre.dubois@email.com</p>
+                                        <div class="flex items-center space-x-4 mt-2">
+                                            <span class="text-xs bg-primary-100 text-primary px-2 py-1 rounded-full">Joueur Expérimenté</span>
+                                            <span class="text-xs text-text-secondary">Club: RC Toulouse</span>
+                                        </div>
+                                        <p class="text-sm text-text-secondary mt-2">15 ans d'expérience, poste: Pilier</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <button onclick="approveUser('pierre.dubois@email.com')" class="btn-primary text-sm px-4 py-2">
+                                        Approuver
+                                    </button>
+                                    <button onclick="denyUser('pierre.dubois@email.com')" class="bg-error text-white text-sm px-4 py-2 rounded-lg hover:bg-red-600 transition-smooth">
+                                        Refuser
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Application Card 2 -->
+                        <div class="border border-border-light rounded-lg p-4 hover:shadow-rugby transition-all duration-300">
+                            <div class="flex items-start justify-between">
+                                <div class="flex items-start space-x-4">
+                                    <img src="https://images.pixabay.com/photo/2016/11/21/12/42/beard-1845166_150.jpg" alt="Marie Laurent" class="w-12 h-12 rounded-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1584824486509-112e4181ff6b?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'; this.onerror=null;" />
+                                    <div class="flex-1">
+                                        <h3 class="font-semibold text-primary">Marie Laurent</h3>
+                                        <p class="text-sm text-text-secondary">marie.laurent@email.com</p>
+                                        <div class="flex items-center space-x-4 mt-2">
+                                            <span class="text-xs bg-accent-100 text-accent px-2 py-1 rounded-full">Entraîneuse</span>
+                                            <span class="text-xs text-text-secondary">Club: Stade Français</span>
+                                        </div>
+                                        <p class="text-sm text-text-secondary mt-2">Diplôme FFR Niveau 2, spécialiste mêlée</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <button onclick="approveUser('marie.laurent@email.com')" class="btn-primary text-sm px-4 py-2">
+                                        Approuver
+                                    </button>
+                                    <button onclick="denyUser('marie.laurent@email.com')" class="bg-error text-white text-sm px-4 py-2 rounded-lg hover:bg-red-600 transition-smooth">
+                                        Refuser
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Application Card 3 -->
+                        <div class="border border-border-light rounded-lg p-4 hover:shadow-rugby transition-all duration-300">
+                            <div class="flex items-start justify-between">
+                                <div class="flex items-start space-x-4">
+                                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face" alt="Thomas Martin" class="w-12 h-12 rounded-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1584824486509-112e4181ff6b?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'; this.onerror=null;" />
+                                    <div class="flex-1">
+                                        <h3 class="font-semibold text-primary">Thomas Martin</h3>
+                                        <p class="text-sm text-text-secondary">thomas.martin@email.com</p>
+                                        <div class="flex items-center space-x-4 mt-2">
+                                            <span class="text-xs bg-secondary-100 text-secondary px-2 py-1 rounded-full">Nouveau Membre</span>
+                                            <span class="text-xs text-text-secondary">Club: Racing 92</span>
+                                        </div>
+                                        <p class="text-sm text-text-secondary mt-2">Débutant passionné, souhaite apprendre</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <button onclick="approveUser('thomas.martin@email.com')" class="btn-primary text-sm px-4 py-2">
+                                        Approuver
+                                    </button>
+                                    <button onclick="denyUser('thomas.martin@email.com')" class="bg-error text-white text-sm px-4 py-2 rounded-lg hover:bg-red-600 transition-smooth">
+                                        Refuser
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Sidebar -->
+            <div class="space-y-6">
+                <!-- Email Notifications -->
+                <div class="card">
+                    <div class="p-6 border-b border-border-light">
+                        <h3 class="text-lg font-semibold text-primary">Notifications Email</h3>
+                    </div>
+                    <div class="p-6 space-y-4">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="font-medium text-sm">Auto-Approbation</p>
+                                <p class="text-xs text-text-secondary">Emails automatiques</p>
+                            </div>
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" checked class="sr-only peer" />
+                                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                            </label>
+                        </div>
+                        
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="font-medium text-sm">Emails de Bienvenue</p>
+                                <p class="text-xs text-text-secondary">Nouveaux membres</p>
+                            </div>
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" checked class="sr-only peer" />
+                                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                            </label>
+                        </div>
+
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="font-medium text-sm">Notifications de Refus</p>
+                                <p class="text-xs text-text-secondary">Avec raisons</p>
+                            </div>
+                            <label class="relative inline-flex items-center cursor-pointer">
+                                <input type="checkbox" checked class="sr-only peer" />
+                                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                            </label>
+                        </div>
+
+                        <button class="btn-accent w-full text-sm mt-4">
+                            Configurer Templates
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Recent Activity -->
+                <div class="card">
+                    <div class="p-6 border-b border-border-light">
+                        <h3 class="text-lg font-semibold text-primary">Activité Récente</h3>
+                    </div>
+                    <div class="p-6 space-y-4">
+                        <div class="flex items-start space-x-3">
+                            <div class="w-2 h-2 bg-success rounded-full mt-2"></div>
+                            <div>
+                                <p class="text-sm font-medium">Jean Dupont approuvé</p>
+                                <p class="text-xs text-text-secondary">Il y a 2 heures</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start space-x-3">
+                            <div class="w-2 h-2 bg-warning rounded-full mt-2"></div>
+                            <div>
+                                <p class="text-sm font-medium">3 nouvelles demandes</p>
+                                <p class="text-xs text-text-secondary">Il y a 4 heures</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start space-x-3">
+                            <div class="w-2 h-2 bg-error rounded-full mt-2"></div>
+                            <div>
+                                <p class="text-sm font-medium">Demande refusée</p>
+                                <p class="text-xs text-text-secondary">Hier</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start space-x-3">
+                            <div class="w-2 h-2 bg-primary rounded-full mt-2"></div>
+                            <div>
+                                <p class="text-sm font-medium">Système mis à jour</p>
+                                <p class="text-xs text-text-secondary">Il y a 2 jours</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="card">
+                    <div class="p-6 border-b border-border-light">
+                        <h3 class="text-lg font-semibold text-primary">Actions Rapides</h3>
+                    </div>
+                    <div class="p-6 space-y-3">
+                        <button class="w-full btn-primary text-sm">
+                            Approuver Toutes les Demandes
+                        </button>
+                        <button class="w-full btn-secondary text-sm">
+                            Exporter Liste Membres
+                        </button>
+                        <button class="w-full btn-accent text-sm">
+                            Envoyer Newsletter
+                        </button>
+                        <button onclick="window.location.href='account_request_gateway.html'" class="w-full border border-border text-text-secondary hover:bg-primary-50 hover:text-primary transition-smooth text-sm px-4 py-2 rounded-lg">
+                            Voir Formulaire Public
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Member Directory Section -->
+        <section class="mt-8">
+            <div class="card">
+                <div class="p-6 border-b border-border-light">
+                    <div class="flex items-center justify-between">
+                        <h2 class="text-xl font-semibold text-primary">Annuaire des Membres</h2>
+                        <div class="flex items-center space-x-4">
+                            <div class="relative">
+                                <input type="text" placeholder="Rechercher un membre..." class="pl-10 pr-4 py-2 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm" />
+                                <svg class="absolute left-3 top-2.5 h-4 w-4 text-text-secondary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                                </svg>
+                            </div>
+                            <select class="text-sm border border-border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500">
+                                <option>Tous les rôles</option>
+                                <option>Joueurs</option>
+                                <option>Entraîneurs</option>
+                                <option>Administrateurs</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead class="bg-primary-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-primary uppercase tracking-wider">Membre</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-primary uppercase tracking-wider">Rôle</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-primary uppercase tracking-wider">Club</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-primary uppercase tracking-wider">Statut</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-primary uppercase tracking-wider">Dernière Activité</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-primary uppercase tracking-wider">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-border-light">
+                            <tr class="hover:bg-primary-50 transition-smooth">
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center">
+                                        <img src="https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=150&h=150&fit=crop" alt="Antoine Rousseau" class="w-10 h-10 rounded-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1584824486509-112e4181ff6b?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'; this.onerror=null;" />
+                                        <div class="ml-4">
+                                            <div class="text-sm font-medium text-primary">Antoine Rousseau</div>
+                                            <div class="text-sm text-text-secondary">antoine.rousseau@email.com</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-primary-100 text-primary">
+                                        Joueur
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-text-secondary">
+                                    RC Toulon
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-success-100 text-success">
+                                        Actif
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-text-secondary">
+                                    Il y a 2 heures
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                    <button class="text-primary hover:text-primary-700 mr-3">Voir</button>
+                                    <button class="text-error hover:text-red-700">Suspendre</button>
+                                </td>
+                            </tr>
+                            
+                            <tr class="hover:bg-primary-50 transition-smooth">
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center">
+                                        <img src="https://images.pixabay.com/photo/2017/06/26/02/47/man-2442565_150.jpg" alt="Sophie Bernard" class="w-10 h-10 rounded-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1584824486509-112e4181ff6b?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'; this.onerror=null;" />
+                                        <div class="ml-4">
+                                            <div class="text-sm font-medium text-primary">Sophie Bernard</div>
+                                            <div class="text-sm text-text-secondary">sophie.bernard@email.com</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-accent-100 text-accent">
+                                        Entraîneuse
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-text-secondary">
+                                    Stade Toulousain
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-success-100 text-success">
+                                        Actif
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-text-secondary">
+                                    Il y a 1 jour
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                    <button class="text-primary hover:text-primary-700 mr-3">Voir</button>
+                                    <button class="text-error hover:text-red-700">Suspendre</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="px-6 py-4 border-t border-border-light">
+                    <div class="flex items-center justify-between">
+                        <p class="text-sm text-text-secondary">
+                            Affichage de 1 à 10 sur 2,847 membres
+                        </p>
+                        <div class="flex items-center space-x-2">
+                            <button class="px-3 py-1 text-sm border border-border rounded hover:bg-primary-50 transition-smooth">
+                                Précédent
+                            </button>
+                            <button class="px-3 py-1 text-sm bg-primary text-white rounded">
+                                1
+                            </button>
+                            <button class="px-3 py-1 text-sm border border-border rounded hover:bg-primary-50 transition-smooth">
+                                2
+                            </button>
+                            <button class="px-3 py-1 text-sm border border-border rounded hover:bg-primary-50 transition-smooth">
+                                3
+                            </button>
+                            <button class="px-3 py-1 text-sm border border-border rounded hover:bg-primary-50 transition-smooth">
+                                Suivant
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-surface border-t border-border-light py-8 mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="flex items-center mb-4 md:mb-0">
+                    <svg class="h-8 w-8 text-primary mr-3" viewBox="0 0 40 40" fill="currentColor">
+                        <circle cx="20" cy="20" r="18" fill="none" stroke="currentColor" stroke-width="2"/>
+                        <ellipse cx="20" cy="20" rx="12" ry="8" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                        <path d="M8 20 L32 20 M20 8 L20 32" stroke="currentColor" stroke-width="1"/>
+                        <circle cx="20" cy="20" r="3" fill="currentColor"/>
+                    </svg>
+                    <div>
+                        <p class="text-sm font-semibold text-primary">RugbyAuth Portal</p>
+                        <p class="text-xs text-text-secondary">Administration</p>
+                    </div>
+                </div>
+                
+                <div class="flex items-center space-x-6 text-sm text-text-secondary">
+                    <a href="javascript:void(0)" class="hover:text-primary transition-smooth">Audit Logs</a>
+                    <a href="javascript:void(0)" class="hover:text-primary transition-smooth">Sécurité</a>
+                    <a href="javascript:void(0)" class="hover:text-primary transition-smooth">Support Admin</a>
+                    <span>© 2025 RugbyAuth Portal. Tous droits réservés.</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Check admin authentication
+        document.addEventListener('DOMContentLoaded', function() {
+            const user = JSON.parse(localStorage.getItem('rugbyAuthUser') || '{}');
+            if (!user.email || user.role !== 'admin') {
+                window.location.href = 'authentication_portal.html';
+                return;
+            }
+        });
+
+        // Logout function
+        function logout() {
+            if (confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) {
+                localStorage.removeItem('rugbyAuthUser');
+                window.location.href = 'authentication_portal.html';
+            }
+        }
+
+        // Approve user function
+        function approveUser(email) {
+            if (confirm(`Approuver la demande de ${email} ?`)) {
+                // Mock approval logic
+                const button = event.target;
+                const card = button.closest('.border');
+                
+                // Show success animation
+                button.innerHTML = `
+                    <svg class="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                `;
+                
+                setTimeout(() => {
+                    button.innerHTML = `
+                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                        </svg>
+                        Approuvé
+                    `;
+                    button.disabled = true;
+                    button.classList.remove('btn-primary');
+                    button.classList.add('bg-success', 'text-white');
+                    
+                    // Hide deny button
+                    const denyButton = card.querySelector('.bg-error');
+                    if (denyButton) {
+                        denyButton.style.display = 'none';
+                    }
+                    
+                    // Add success badge
+                    const badgeContainer = card.querySelector('.flex.items-center.space-x-4');
+                    const successBadge = document.createElement('span');
+                    successBadge.className = 'text-xs bg-success-100 text-success px-2 py-1 rounded-full';
+                    successBadge.textContent = 'Approuvé';
+                    badgeContainer.appendChild(successBadge);
+                    
+                    // Update metrics (mock)
+                    updateMetrics('approve');
+                }, 1000);
+            }
+        }
+
+        // Deny user function
+        function denyUser(email) {
+            const reason = prompt(`Raison du refus pour ${email} :`);
+            if (reason) {
+                const button = event.target;
+                const card = button.closest('.border');
+                
+                // Show processing animation
+                button.innerHTML = `
+                    <svg class="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                `;
+                
+                setTimeout(() => {
+                    button.innerHTML = `
+                        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                        Refusé
+                    `;
+                    button.disabled = true;
+                    
+                    // Hide approve button
+                    const approveButton = card.querySelector('.btn-primary');
+                    if (approveButton) {
+                        approveButton.style.display = 'none';
+                    }
+                    
+                    // Add denied badge
+                    const badgeContainer = card.querySelector('.flex.items-center.space-x-4');
+                    const deniedBadge = document.createElement('span');
+                    deniedBadge.className = 'text-xs bg-error-100 text-error px-2 py-1 rounded-full';
+                    deniedBadge.textContent = 'Refusé';
+                    badgeContainer.appendChild(deniedBadge);
+                    
+                    // Update metrics (mock)
+                    updateMetrics('deny');
+                }, 1000);
+            }
+        }
+
+        // Update metrics function
+        function updateMetrics(action) {
+            const pendingElement = document.querySelector('.text-warning').closest('.card').querySelector('.text-3xl');
+            const currentPending = parseInt(pendingElement.textContent);
+            
+            if (action === 'approve' || action === 'deny') {
+                pendingElement.textContent = Math.max(0, currentPending - 1);
+                
+                if (action === 'approve') {
+                    const activeElement = document.querySelector('.text-success').closest('.card').querySelector('.text-3xl');
+                    const currentActive = parseInt(activeElement.textContent.replace(',', ''));
+                    activeElement.textContent = (currentActive + 1).toLocaleString();
+                    
+                    const approvalsElement = document.querySelector('.text-primary').closest('.card').querySelector('.text-3xl');
+                    const currentApprovals = parseInt(approvalsElement.textContent);
+                    approvalsElement.textContent = currentApprovals + 1;
+                }
+            }
+        }
+
+        // Auto-refresh pending requests (mock)
+        setInterval(() => {
+            // In a real application, this would fetch new data from the server
+            console.log('Checking for new pending requests...');
+        }, 30000); // Check every 30 seconds
+
+        // Search functionality
+        document.querySelector('input[placeholder="Rechercher un membre..."]').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const rows = document.querySelectorAll('tbody tr');
+            
+            rows.forEach(row => {
+                const name = row.querySelector('.text-sm.font-medium').textContent.toLowerCase();
+                const email = row.querySelector('.text-sm.text-text-secondary').textContent.toLowerCase();
+                
+                if (name.includes(searchTerm) || email.includes(searchTerm)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
+
+        // Filter functionality
+        document.querySelectorAll('select').forEach(select => {
+            select.addEventListener('change', function() {
+                // Mock filter functionality
+                console.log('Filter changed:', this.value);
+            });
+        });
+
+        // Real-time updates simulation
+        function simulateRealTimeUpdates() {
+            // Simulate new pending request
+            const activities = [
+                'Nouvelle demande reçue',
+                'Membre connecté',
+                'Email envoyé',
+                'Profil mis à jour'
+            ];
+            
+            const randomActivity = activities[Math.floor(Math.random() * activities.length)];
+            console.log('Nouvelle activité:', randomActivity);
+        }
+
+        // Start real-time simulation
+        setInterval(simulateRealTimeUpdates, 60000); // Every minute
+    </script>
+<script id="dhws-dataInjector" src="../public/dhws-data-injector.js"></script>
+</body>
+</html>
